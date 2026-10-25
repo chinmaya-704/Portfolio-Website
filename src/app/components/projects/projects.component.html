@@ -1,0 +1,45 @@
+<div>
+  <!-- Header -->
+  <div class="flex flex-col items-start mb-8 sm:mb-12">
+    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-mono font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 mb-3">
+      <app-icon name="layers" [size]="14" />
+      <span>Featured Showcase</span>
+    </div>
+    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+      Featured Projects &amp; Architecture
+    </h2>
+    <p class="mt-3 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-3xl">
+      A collection of full-stack systems, deep learning classification platforms, and interactive browser applications.
+    </p>
+
+    <!-- Filter Category Tabs -->
+    <div class="flex flex-wrap gap-2 mt-8 p-1.5 rounded-2xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/10">
+      @for (tab of categoryTabs; track tab.id) {
+        <button
+          type="button"
+          (click)="projectService.setFilter(tab.id)"
+          class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer"
+          [class.bg-white]="projectService.activeFilter() === tab.id"
+          [class.dark:bg-slate-800]="projectService.activeFilter() === tab.id"
+          [class.text-cyan-600]="projectService.activeFilter() === tab.id"
+          [class.dark:text-cyan-400]="projectService.activeFilter() === tab.id"
+          [class.shadow-sm]="projectService.activeFilter() === tab.id"
+          [class.text-slate-600]="projectService.activeFilter() !== tab.id"
+          [class.dark:text-slate-400]="projectService.activeFilter() !== tab.id"
+        >
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Projects Responsive Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+    @for (project of projectService.filteredProjects(); track project.id) {
+      <app-project-card [project]="project" />
+    }
+  </div>
+
+  <!-- Native HTML5 Dialog Architecture Modal -->
+  <app-project-modal />
+</div>

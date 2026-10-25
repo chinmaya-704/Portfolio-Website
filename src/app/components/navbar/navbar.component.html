@@ -1,0 +1,109 @@
+<header
+  class="w-full transition-all duration-300 backdrop-blur-xl border-b border-white/10"
+  [class.bg-slate-950/85]="scrollService.isScrolled()"
+  [class.bg-slate-950/60]="!scrollService.isScrolled()"
+  [class.shadow-md]="scrollService.isScrolled()"
+  [class.shadow-black/20]="scrollService.isScrolled()"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+    <!-- Brand Monogram -->
+    <a
+      href="#hero"
+      (click)="navTo($event, 'hero')"
+      class="group flex items-center space-x-2 text-left focus:outline-none cursor-pointer"
+      title="Back to Top"
+    >
+      <span class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white font-extrabold text-lg shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-200">
+        CK
+      </span>
+      <div class="flex flex-col">
+        <span class="font-bold text-base sm:text-lg tracking-tight text-white leading-tight">
+          Chinmaya<span class="text-cyan-400">.</span>
+        </span>
+        <span class="text-xs font-mono text-slate-400 tracking-wider uppercase hidden sm:block">
+          Full-Stack Dev
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 bg-slate-900/60 p-1.5 rounded-full border border-white/10 shadow-inner">
+      @for (item of navItems; track item.id) {
+        <a
+          [href]="'#' + item.id"
+          (click)="navTo($event, item.id)"
+          class="px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-medium transition-all duration-200 focus:outline-none cursor-pointer"
+          [class.bg-gradient-to-r]="scrollService.activeSection() === item.id"
+          [class.from-cyan-500/20]="scrollService.activeSection() === item.id"
+          [class.to-indigo-500/20]="scrollService.activeSection() === item.id"
+          [class.border]="scrollService.activeSection() === item.id"
+          [class.border-cyan-500/40]="scrollService.activeSection() === item.id"
+          [class.text-cyan-300]="scrollService.activeSection() === item.id"
+          [class.shadow-sm]="scrollService.activeSection() === item.id"
+          [class.text-slate-400]="scrollService.activeSection() !== item.id"
+          [class.hover:text-slate-100]="scrollService.activeSection() !== item.id"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <!-- Actions: Recruiter Contact CTA & Mobile Hamburger -->
+    <div class="flex items-center space-x-3">
+      <a
+        href="#contact"
+        (click)="navTo($event, 'contact')"
+        class="hidden sm:inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white shadow-md shadow-cyan-500/20 hover:shadow-cyan-500/30 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+      >
+        <span>Let's Talk</span>
+        <app-icon name="send" [size]="14" className="text-white" />
+      </a>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        type="button"
+        (click)="toggleMobileMenu()"
+        class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 focus:outline-none cursor-pointer"
+        [attr.aria-label]="isMobileMenuOpen() ? 'Close navigation menu' : 'Open navigation menu'"
+      >
+        @if (isMobileMenuOpen()) {
+          <app-icon name="close" [size]="20" />
+        } @else {
+          <app-icon name="menu" [size]="20" />
+        }
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  @if (isMobileMenuOpen()) {
+    <div class="md:hidden border-t border-slate-800 bg-slate-950/95 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-2 animate-in fade-in slide-in-from-top-4 duration-200 shadow-xl">
+      @for (item of navItems; track item.id) {
+        <a
+          [href]="'#' + item.id"
+          (click)="navTo($event, item.id)"
+          class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-colors text-left cursor-pointer"
+          [class.bg-slate-900]="scrollService.activeSection() === item.id"
+          [class.text-cyan-400]="scrollService.activeSection() === item.id"
+          [class.text-slate-300]="scrollService.activeSection() !== item.id"
+        >
+          <span>{{ item.label }}</span>
+          @if (scrollService.activeSection() === item.id) {
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          }
+        </a>
+      }
+
+      <div class="pt-2">
+        <a
+          href="#contact"
+          (click)="navTo($event, 'contact')"
+          class="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/20"
+        >
+          <span>Get in Touch</span>
+          <app-icon name="send" [size]="14" className="text-white" />
+        </a>
+      </div>
+    </div>
+  }
+</header>

@@ -1,0 +1,251 @@
+<div>
+  <!-- Header -->
+  <div class="flex flex-col items-start mb-8 sm:mb-12">
+    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-mono font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 mb-3">
+      <app-icon name="briefcase" [size]="14" />
+      <span>Career Milestones</span>
+    </div>
+    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+      Experience &amp; Leadership
+    </h2>
+    <!-- <p class="mt-3 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-3xl">
+      A clear demarcation between software engineering contributions and large-scale campus leadership.
+    </p> -->
+
+    <!-- Segmented Track Switcher -->
+    <div class="flex flex-wrap gap-2 mt-8 p-1.5 rounded-2xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/10">
+      @for (track of tracks; track track.id) {
+        <button
+          type="button"
+          (click)="expService.setTrack(track.id)"
+          class="flex items-center space-x-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer"
+          [class.bg-white]="expService.activeTrack() === track.id"
+          [class.dark:bg-slate-800]="expService.activeTrack() === track.id"
+          [class.text-cyan-600]="expService.activeTrack() === track.id"
+          [class.dark:text-cyan-400]="expService.activeTrack() === track.id"
+          [class.shadow-sm]="expService.activeTrack() === track.id"
+          [class.text-slate-600]="expService.activeTrack() !== track.id"
+          [class.dark:text-slate-400]="expService.activeTrack() !== track.id"
+        >
+          <span>{{ track.label }}</span>
+          <span
+            class="px-2 py-0.5 rounded-full text-[11px] font-mono"
+            [class.bg-cyan-500/15]="expService.activeTrack() === track.id"
+            [class.text-cyan-600]="expService.activeTrack() === track.id"
+            [class.dark:text-cyan-300]="expService.activeTrack() === track.id"
+            [class.bg-slate-200]="expService.activeTrack() !== track.id"
+            [class.dark:bg-slate-700]="expService.activeTrack() !== track.id"
+            [class.text-slate-500]="expService.activeTrack() !== track.id"
+            [class.dark:text-slate-400]="expService.activeTrack() !== track.id"
+          >
+            {{ track.id === 'all' ? expService.totalCount() : (track.id === 'work' ? expService.workCount() : expService.leadershipCount()) }}
+          </span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="space-y-12">
+    <!-- TRACK 1: Professional Experience -->
+    @if (expService.activeTrack() === 'all' || expService.activeTrack() === 'work') {
+      <div class="space-y-6">
+        <!-- Track Subheader -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200/60 dark:border-white/5">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 dark:bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 flex items-center justify-center border border-cyan-500/20">
+              <app-icon name="briefcase" [size]="20" />
+            </div>
+            <div>
+              <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                Professional Experience
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                Full-stack software engineering, scalable architectures, and production delivery
+              </p>
+            </div>
+          </div>
+
+          <span class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 self-start sm:self-auto">
+            {{ expService.workCount() }} {{ expService.workCount() === 1 ? 'Engineering Role' : 'Industry Roles' }}
+          </span>
+        </div>
+
+        <!-- Vertical Timeline Rail for Work -->
+        <div class="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 sm:ml-8 space-y-8 sm:space-y-10">
+          @for (exp of expService.workExperiences(); track exp.id) {
+            <div class="relative pl-6 sm:pl-10 group">
+              <!-- Timeline Glowing Dot Indicator -->
+              <div class="absolute -left-2.25 top-6 w-4 h-4 rounded-full border-2 border-white dark:border-slate-950 bg-cyan-500 shadow-md shadow-cyan-500/50 group-hover:scale-125 transition-transform duration-300"></div>
+
+              <!-- Experience Card -->
+              <div class="p-6 sm:p-8 rounded-2xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 hover:border-cyan-500/40 transition-all duration-300 shadow-sm hover:shadow-lg">
+                <!-- Top Row: Role Title & Type Badge -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                  <h4 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">
+                    {{ exp.role }}
+                  </h4>
+
+                  <span class="self-start sm:self-auto px-3 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
+                    {{ exp.type }}
+                  </span>
+                </div>
+
+                <!-- Organization & Meta -->
+                <div class="text-base font-semibold text-slate-800 dark:text-slate-200 mb-3">
+                  {{ exp.organization }}
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mb-6">
+                  <span class="inline-flex items-center space-x-1.5">
+                    <app-icon name="calendar" [size]="14" />
+                    <span>{{ exp.period }}</span>
+                  </span>
+                  <span>•</span>
+                  <span class="inline-flex items-center space-x-1.5">
+                    <app-icon name="map-pin" [size]="14" />
+                    <span>{{ exp.location }}</span>
+                  </span>
+                </div>
+
+                <!-- Highlights List -->
+                <ul class="space-y-3 mb-6">
+                  @for (item of exp.highlights; track item) {
+                    <li class="flex items-start space-x-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                      <span class="text-cyan-500 dark:text-cyan-400 mt-1 shrink-0">
+                        <app-icon name="arrow-right" [size]="14" />
+                      </span>
+                      <span>{{ item }}</span>
+                    </li>
+                  }
+                </ul>
+
+                <!-- Skill Badges -->
+                <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-200/60 dark:border-white/5">
+                  @for (skill of exp.skills; track skill) {
+                    <span class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                      #{{ skill }}
+                    </span>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Visual Demarcation Divider (shown when 'all' is active) -->
+    @if (expService.activeTrack() === 'all') {
+      <div class="my-14 sm:my-18 relative flex items-center justify-center">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-slate-200/80 dark:border-white/10"></div>
+        </div>
+        <div class="relative px-5 py-2 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-white/15 text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center space-x-2.5 shadow-sm">
+          <app-icon name="users" [size]="15" className="text-amber-500" />
+          <span>Campus Leadership &amp; Community Impact</span>
+        </div>
+      </div>
+    }
+
+    <!-- TRACK 2: Leadership & Community Impact -->
+    @if (expService.activeTrack() === 'all' || expService.activeTrack() === 'leadership') {
+      <div class="space-y-6">
+        <!-- Track Subheader -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200/60 dark:border-white/5">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 dark:bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-500/20">
+              <app-icon name="award" [size]="20" />
+            </div>
+            <div>
+              <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                Leadership &amp; Campus Governance
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                Directing large-scale cross-functional teams, festival operations, and youth hackathons
+              </p>
+            </div>
+          </div>
+
+          <span class="text-xs font-mono px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 self-start sm:self-auto">
+            {{ expService.leadershipCount() }} Key Initiatives
+          </span>
+        </div>
+
+        <!-- Vertical Timeline Rail for Leadership -->
+        <div class="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 sm:ml-8 space-y-8 sm:space-y-10">
+          @for (exp of expService.leadershipExperiences(); track exp.id) {
+            <div class="relative pl-6 sm:pl-10 group">
+              <!-- Timeline Glowing Dot Indicator (Amber Accent) -->
+              <div class="absolute -left-2.25 top-6 w-4 h-4 rounded-full border-2 border-white dark:border-slate-950 bg-amber-500 shadow-md shadow-amber-500/50 group-hover:scale-125 transition-transform duration-300"></div>
+
+              <!-- Experience Card -->
+              <div class="p-6 sm:p-8 rounded-2xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 hover:border-amber-500/40 transition-all duration-300 shadow-sm hover:shadow-lg">
+                <!-- Top Row: Role Title & Type Badge -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                  <h4 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors">
+                    {{ exp.role }}
+                  </h4>
+
+                  <span
+                    class="self-start sm:self-auto px-3 py-1 rounded-full text-xs font-mono font-semibold"
+                    [class.bg-amber-500/10]="exp.type === 'Leadership'"
+                    [class.text-amber-600]="exp.type === 'Leadership'"
+                    [class.dark:text-amber-400]="exp.type === 'Leadership'"
+                    [class.border]="exp.type === 'Leadership'"
+                    [class.border-amber-500/30]="exp.type === 'Leadership'"
+
+                    [class.bg-purple-500/10]="exp.type === 'Mentorship'"
+                    [class.text-purple-600]="exp.type === 'Mentorship'"
+                    [class.dark:text-purple-400]="exp.type === 'Mentorship'"
+                    [class.border]="exp.type === 'Mentorship'"
+                    [class.border-purple-500/30]="exp.type === 'Mentorship'"
+                  >
+                    {{ exp.type }}
+                  </span>
+                </div>
+
+                <!-- Organization & Meta -->
+                <div class="text-base font-semibold text-slate-800 dark:text-slate-200 mb-3">
+                  {{ exp.organization }}
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400 mb-6">
+                  <span class="inline-flex items-center space-x-1.5">
+                    <app-icon name="calendar" [size]="14" />
+                    <span>{{ exp.period }}</span>
+                  </span>
+                  <span>•</span>
+                  <span class="inline-flex items-center space-x-1.5">
+                    <app-icon name="map-pin" [size]="14" />
+                    <span>{{ exp.location }}</span>
+                  </span>
+                </div>
+
+                <!-- Highlights List -->
+                <ul class="space-y-3 mb-6">
+                  @for (item of exp.highlights; track item) {
+                    <li class="flex items-start space-x-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                      <span class="text-amber-500 dark:text-amber-400 mt-1 shrink-0">
+                        <app-icon name="arrow-right" [size]="14" />
+                      </span>
+                      <span>{{ item }}</span>
+                    </li>
+                  }
+                </ul>
+
+                <!-- Skill Badges -->
+                <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-200/60 dark:border-white/5">
+                  @for (skill of exp.skills; track skill) {
+                    <span class="px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                      #{{ skill }}
+                    </span>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

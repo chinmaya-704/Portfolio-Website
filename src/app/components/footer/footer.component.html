@@ -1,0 +1,54 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+  
+  <!-- Left Column: Monogram & Tech Stack Note -->
+  <div class="flex flex-col sm:items-start items-center space-y-1 text-center sm:text-left">
+    <div class="flex items-center space-x-2">
+      <span class="w-7 h-7 rounded-lg bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white font-extrabold text-xs shadow-sm">
+        CK
+      </span>
+      <span class="font-bold text-slate-900 dark:text-white">
+        Chinmaya Kumar Sahoo
+      </span>
+    </div>
+    <p class="text-xs text-slate-500 dark:text-slate-400">
+      Built with Angular v21, Strict TypeScript &amp; Tailwind CSS • 0 Third-Party Dependencies
+    </p>
+    <p class="text-xs text-slate-400 dark:text-slate-500 font-mono">
+      © {{ currentYear }} All rights reserved.
+    </p>
+  </div>
+
+  <!-- Right Column: Socials & Back to Top -->
+  <div class="flex items-center space-x-4">
+    <a
+      [href]="githubUrl"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-cyan-500 dark:hover:text-cyan-400 hover:border-cyan-500/50 flex items-center justify-center transition-colors"
+      aria-label="GitHub Profile"
+    >
+      <app-icon name="github" [size]="18" />
+    </a>
+
+    <a
+      [href]="linkedinUrl"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-cyan-500 dark:hover:text-cyan-400 hover:border-cyan-500/50 flex items-center justify-center transition-colors"
+      aria-label="LinkedIn Profile"
+    >
+      <app-icon name="linkedin" [size]="18" />
+    </a>
+
+    <a
+      href="#hero"
+      (click)="scrollToTop($event)"
+      class="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-mono font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors cursor-pointer"
+      title="Back to top"
+    >
+      <span>Top</span>
+      <app-icon name="arrow-up" [size]="14" />
+    </a>
+  </div>
+
+</div>
